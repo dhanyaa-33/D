@@ -81,3 +81,43 @@ sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
 plt.title('Correlation Matrix Heatmap')
 plt.show()
 
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load ChickWeight dataset (replace with actual path or use seaborn's built-in datasets if available)
+# df = sns.load_dataset('ChickWeight') # Uncomment if ChickWeight dataset is available
+
+# Sample data similar to ChickWeight (for illustration purposes)
+data = {
+    'Chick': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    'Time': [2, 2, 4, 4, 6, 6, 8, 8, 10, 10],
+    'Weight': [50, 52, 65, 67, 70, 72, 80, 82, 90, 92],
+    'Diet': [1, 1, 2, 2, 3, 3, 4, 4, 1, 1]
+}
+df = pd.DataFrame(data)
+
+# Part (i): Order and extract the last 6 records
+df_sorted = df.sort_values(by='Weight').groupby('Diet').tail(6)
+print("Last 6 records from ordered DataFrame:\n", df_sorted)
+
+# Part (ii): Melting and casting
+df_melted = pd.melt(df, id_vars=['Chick', 'Time', 'Diet'], value_vars=['Weight'], var_name='Feature', value_name='Value')
+print("Melted DataFrame:\n", df_melted)
+
+# Calculate mean and mode of weight grouped by Diet
+mean_weight = df.groupby('Diet')['Weight'].mean()
+mode_weight = df.groupby('Diet')['Weight'].apply(lambda x: x.mode().iloc[0])
+print("Mean weight by Diet:\n", mean_weight)
+print("Mode weight by Diet:\n", mode_weight)
+
+# Part (c): Visualization of chick weight over time
+plt.figure(figsize=(10, 6))
+sns.lineplot(data=df, x='Time', y='Weight', hue='Chick', marker='o')
+plt.title('Chick Weight Development Over Time')
+plt.xlabel('Time')
+plt.ylabel('Weight')
+plt.legend(title='Chick')
+plt.show()
+
