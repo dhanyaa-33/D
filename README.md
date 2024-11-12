@@ -51,4 +51,33 @@ print("Mean Squared Error:", mse)
 print("Coefficients:", model.coef_)
 print("Intercept:", model.intercept_)
 
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Given data
+data = {
+    'Student_ID': [1, 2, 3, 4, 5, 6],
+    'Math_Score': [85, 70, 90, 60, 95, 80],
+    'Science_Score': [80, 65, 85, 55, 90, 75]
+}
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Scatter plot
+plt.figure(figsize=(8, 6))
+sns.scatterplot(data=df, x='Math_Score', y='Science_Score')
+plt.title('Math Score vs Science Score')
+plt.show()
+
+# Correlation matrix
+correlation_matrix = df[['Math_Score', 'Science_Score']].corr()
+print("Correlation Matrix:\n", correlation_matrix)
+
+# Heatmap for correlation matrix
+plt.figure(figsize=(6, 4))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title('Correlation Matrix Heatmap')
+plt.show()
 
